@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lulu Dev Workflow · 架构总图</title>
+  <style>
+    :root {
+      --ink: #1c1917;
+      --muted: #78716c;
+      --line: #e7e5e4;
+      --line-2: #f0eeeb;
+      --paper: #f4f3ef;
+      --wash: #faf9f6;
+      --edge: #a8a29e;
+      --gutter: 104px;
+      --node-h: 26px;
+      --track-gap: 8px;
+      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", serif;
+      --sans: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--paper);
+      padding: 28px 24px 40px;
+      display: flex;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      display: flex;
+      flex-direction: column;
+      width: max-content;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    /* ---------- header ---------- */
+
+    .titlebar,
+    .band,
+    .layer { min-width: 100%; }
+
+    .titlebar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 28px;
+      padding: 22px 28px 18px;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .titlebar h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .titlebar .meta {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ---------- group band ---------- */
+
+    .band {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 28px 8px;
+      background: transparent;
+      border-bottom: 0;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .band::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .band + .layer { border-top: 1px solid var(--line); }
+
+    /* ---------- layer ---------- */
+
+    .layer {
+      display: grid;
+      grid-template-columns: 176px 1fr;
+      border-top: 1px solid var(--line);
+    }
+
+    .layer.out {
+      background: var(--wash);
+    }
+
+    .tab {
+      background: transparent;
+      color: var(--ink);
+      padding: 18px 18px 18px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      border-right: 1px solid var(--line);
+    }
+
+    .layer.out .tab { background: transparent; }
+
+    .tab .no {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      opacity: 1;
+    }
+
+    .tab h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+
+    .tab p {
+      margin: 0;
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 1;
+      letter-spacing: 0.02em;
+    }
+
+    .pane { padding: 18px 28px; }
+
+    .layer.mid .pane {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* ---------- rows ---------- */
+
+    .row {
+      display: grid;
+      grid-template-columns: var(--gutter) 1fr;
+      gap: 0 20px;
+      align-items: center;
+    }
+
+    .row + .row {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line-2);
+    }
+
+    .kicker {
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--muted);
+      text-align: right;
+      letter-spacing: 0.01em;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .stack {
+      display: grid;
+      grid-template-columns: 36px max-content;
+      row-gap: 9px;
+      column-gap: 10px;
+      align-items: center;
+      justify-content: start;
+    }
+
+    .stack-line {
+      display: contents;
+    }
+
+    .stack-line .tag {
+      font-size: 12.5px;
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+
+    .cell {
+      display: inline-flex;
+      align-items: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      padding: 5px 11px;
+      font-size: 12.5px;
+      line-height: 1.25;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .dot {
+      color: var(--edge);
+      padding: 0 8px;
+      font-weight: 400;
+    }
+
+    .cell.principle {
+      gap: 7px;
+      background: #fff;
+      border-color: var(--ink);
+      color: var(--ink);
+      font-weight: 400;
+      font-size: 12.5px;
+      padding: 5px 12px;
+    }
+
+    .cell.principle .op {
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .cell.principle.verdict {
+      padding: 0;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .cell.principle .side {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+    }
+
+    .cell.principle .side.no {
+      border-left: 1px solid var(--line);
+      color: var(--muted);
+      background: transparent;
+    }
+
+    .cell.principle .mark {
+      font-weight: 600;
+      font-size: 11px;
+      line-height: 1;
+    }
+
+    .cell.principle .side.no .mark {
+      opacity: 0.75;
+    }
+
+    /* ---------- arrow primitive ---------- */
+
+    .edge {
+      position: relative;
+      flex: none;
+      width: 14px;
+      min-width: 14px;
+      height: 0;
+      border-top: 1px solid var(--edge);
+    }
+
+    .edge::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -4px;
+      border-left: 5px solid var(--edge);
+      border-top: 3.5px solid transparent;
+      border-bottom: 3.5px solid transparent;
+    }
+
+    /* ---------- stage dag ---------- */
+
+    .arrow {
+      color: var(--muted);
+      font-size: 12px;
+      padding: 0 4px;
+      line-height: 1;
+    }
+
+    .stage-dag {
+      display: flex;
+      align-items: center;
+      width: max-content;
+    }
+
+    .stage-node {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: none;
+      height: var(--node-h);
+      min-width: 0;
+      padding: 2px 6px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      font-size: 11.5px;
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .stage-tracks {
+      display: grid;
+      grid-template-columns: auto auto auto auto;
+      grid-auto-rows: var(--node-h);
+      row-gap: var(--track-gap);
+      align-items: center;
+    }
+
+    .track { display: contents; }
+
+    .stage-merge {
+      display: flex;
+      align-items: center;
+    }
+
+    .phase-group {
+      display: inline-flex;
+      align-items: stretch;
+      flex-wrap: nowrap;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      background: #fff;
+    }
+
+    .phase-group .phase-item {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 11px;
+      font-size: 12.5px;
+      line-height: 1.25;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .phase-group .phase-split {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .cell.spine {
+      border-style: dashed;
+      color: var(--muted);
+    }
+
+    /* ---------- professional dark UI ---------- */
+
+    :root {
+      --ink: #e8edf3;
+      --muted: #8190a0;
+      --line: #26313d;
+      --line-2: #202a34;
+      --paper: #0b1016;
+      --wash: #111923;
+      --edge: #607184;
+      --accent: #8fc7d7;
+      --accent-soft: rgba(143, 199, 215, 0.12);
+      --panel: #111821;
+      --panel-2: #141d27;
+      --chip: #1a2530;
+      --gutter: 104px;
+      --serif: "Avenir Next", "PingFang SC", "Hiragino Sans GB", sans-serif;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 50% -10%, rgba(74, 108, 132, 0.18), transparent 38%),
+        var(--paper);
+      padding: 32px 24px 44px;
+    }
+
+    .page {
+      gap: 8px;
+      background: transparent;
+      border: 0;
+    }
+
+    .titlebar {
+      padding: 12px 18px 18px;
+      border-bottom: 0;
+    }
+
+    .titlebar h1 {
+      font-family: var(--sans);
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.035em;
+    }
+
+    .titlebar .meta {
+      color: var(--muted);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .band {
+      padding: 12px 18px 2px;
+      color: var(--accent);
+      background: transparent;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+    }
+
+    .band::after {
+      background: linear-gradient(90deg, rgba(143, 199, 215, 0.42), transparent);
+    }
+
+    .band + .layer {
+      border-top: 1px solid var(--line);
+    }
+
+    .layer,
+    .layer.out {
+      grid-template-columns: 176px 1fr;
+      background: linear-gradient(115deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow:
+        0 16px 34px rgba(0, 0, 0, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.018);
+    }
+
+    .layer.out {
+      background: linear-gradient(115deg, #101821, #111c26);
+    }
+
+    .tab,
+    .layer.out .tab {
+      position: relative;
+      padding: 20px 18px 20px 24px;
+      color: var(--ink);
+      background: rgba(5, 10, 15, 0.18);
+      border-right: 1px solid var(--line);
+    }
+
+    .tab::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: var(--accent);
+      opacity: 0.72;
+    }
+
+    .tab .no {
+      color: var(--accent);
+      font-size: 9.5px;
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    .tab h2 {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+    }
+
+    .tab p {
+      color: var(--muted);
+      font-size: 10.5px;
+    }
+
+    .pane {
+      padding: 20px 24px;
+      background: transparent;
+    }
+
+    .row + .row {
+      margin-top: 14px;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .kicker {
+      color: #9aa9b8;
+      font-size: 10.5px;
+      font-weight: 500;
+    }
+
+    .stack-line .tag {
+      color: #9aa9b8;
+      font-size: 11.5px;
+    }
+
+    .cell,
+    .stage-node,
+    .phase-group {
+      color: #dbe3eb;
+      background: var(--chip);
+      border-color: transparent;
+      border-radius: 5px;
+    }
+
+    .cell {
+      padding: 5px 11px;
+      font-size: 12px;
+    }
+
+    .dot {
+      color: #657586;
+      padding: 0 8px;
+    }
+
+    .stage-node {
+      padding: 2px 7px;
+      color: #ccd6df;
+      font-size: 11px;
+    }
+
+    .arrow,
+    .phase-group .phase-split {
+      color: #657586;
+    }
+
+    .phase-group .phase-item {
+      color: #dbe3eb;
+      font-size: 12px;
+    }
+
+    .phase-group .phase-split {
+      border-color: #2c3946;
+    }
+
+    .edge {
+      border-color: var(--edge);
+    }
+
+    .edge::after {
+      border-left-color: var(--edge);
+    }
+
+    .cell.spine {
+      color: #9eb0c1;
+      background: transparent;
+      border: 1px dashed #485a6c;
+    }
+
+    .cell.principle {
+      color: #e9f2f5;
+      background: var(--accent-soft);
+      border: 1px solid rgba(143, 199, 215, 0.32);
+      border-radius: 6px;
+    }
+
+    .cell.principle .op {
+      color: var(--accent);
+    }
+
+    .cell.principle .side.no {
+      color: #778695;
+      background: rgba(0, 0, 0, 0.16);
+      border-left-color: rgba(143, 199, 215, 0.18);
+    }
+
+    /* ---------- light professional theme ---------- */
+
+    :root {
+      --ink: #243139;
+      --muted: #76858d;
+      --line: #d7e0e3;
+      --line-2: #e5ebed;
+      --paper: #e9eff1;
+      --wash: #f2f6f7;
+      --edge: #91a4ad;
+      --accent: #277889;
+      --accent-soft: rgba(39, 120, 137, 0.1);
+      --panel: #f8fafb;
+      --panel-2: #f0f5f6;
+      --chip: rgba(255, 255, 255, 0.72);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 50% -15%, rgba(255, 255, 255, 0.92), transparent 44%),
+        linear-gradient(180deg, #edf3f4, var(--paper));
+    }
+
+    .titlebar h1 {
+      color: #18262e;
+    }
+
+    .band::after {
+      background: linear-gradient(90deg, rgba(39, 120, 137, 0.34), transparent);
+    }
+
+    .layer,
+    .layer.out {
+      background: linear-gradient(115deg, var(--panel), var(--panel-2));
+      border-color: rgba(96, 118, 126, 0.17);
+      box-shadow:
+        0 12px 28px rgba(57, 77, 84, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.82);
+    }
+
+    .layer.out {
+      background: linear-gradient(115deg, #f5f9f9, #eaf2f3);
+    }
+
+    .tab,
+    .layer.out .tab {
+      color: var(--ink);
+      background: rgba(220, 231, 234, 0.34);
+      border-right-color: rgba(96, 118, 126, 0.14);
+    }
+
+    .tab h2 {
+      color: #213139;
+    }
+
+    .tab p,
+    .tab .no,
+    .titlebar .meta,
+    .kicker,
+    .stack-line .tag {
+      color: var(--muted);
+    }
+
+    .tab .no,
+    .band {
+      color: var(--accent);
+    }
+
+    .cell,
+    .stage-node,
+    .phase-group {
+      color: #33444d;
+      background: var(--chip);
+      box-shadow: inset 0 0 0 1px rgba(96, 118, 126, 0.09);
+    }
+
+    .phase-group .phase-item {
+      color: #33444d;
+    }
+
+    .phase-group .phase-split {
+      color: #85979f;
+      border-color: rgba(96, 118, 126, 0.13);
+    }
+
+    .arrow {
+      color: #91a2aa;
+    }
+
+    .dot {
+      color: #3f5550;
+      font-weight: 600;
+    }
+
+    .cell.spine {
+      color: #607780;
+      background: rgba(255, 255, 255, 0.38);
+      border-color: #a5b6bd;
+      box-shadow: none;
+    }
+
+    .cell.principle {
+      color: #173944;
+      background: rgba(255, 255, 255, 0.64);
+      border-color: rgba(39, 120, 137, 0.28);
+      box-shadow: 0 4px 12px rgba(57, 77, 84, 0.04);
+    }
+
+    .cell.principle .side.no {
+      color: #89969b;
+      background: rgba(222, 231, 233, 0.54);
+      border-left-color: rgba(39, 120, 137, 0.14);
+    }
+
+    /* ---------- calm interview brief ---------- */
+
+    :root {
+      --ink: #202b29;
+      --muted: #69746f;
+      --line: #d8d9d3;
+      --line-2: #e4e4de;
+      --paper: #e7e5df;
+      --wash: #f1f1ec;
+      --edge: #8c9994;
+      --accent: #426f64;
+      --accent-soft: rgba(66, 111, 100, 0.1);
+      --panel: #f7f6f2;
+      --panel-2: #f4f3ef;
+      --chip: #ecece7;
+    }
+
+    body {
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0)),
+        var(--paper);
+      padding-top: 28px;
+    }
+
+    .page {
+      gap: 0;
+      background: var(--panel);
+      border: 1px solid rgba(69, 79, 75, 0.16);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 48px rgba(50, 58, 55, 0.1);
+    }
+
+    .titlebar {
+      padding: 20px 26px 18px;
+      color: #f4f3ed;
+      background: #26312f;
+    }
+
+    .titlebar h1 {
+      color: #f4f3ed;
+      font-size: 23px;
+      letter-spacing: -0.025em;
+    }
+
+    .titlebar .meta {
+      color: #aeb9b5;
+    }
+
+    .band {
+      padding: 13px 24px 9px;
+      color: #5e746d;
+      background: #e9ebe6;
+      border-top: 1px solid rgba(69, 79, 75, 0.08);
+    }
+
+    .band::after {
+      background: linear-gradient(90deg, rgba(66, 111, 100, 0.28), transparent);
+    }
+
+    .layer,
+    .layer.out {
+      background: var(--panel);
+      border: 0;
+      border-top: 1px solid var(--line);
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .layer.out {
+      background: #f0f1ec;
+    }
+
+    .layer:nth-of-type(3) {
+      position: relative;
+      background: #edf2ef;
+      box-shadow: inset 4px 0 0 var(--accent);
+    }
+
+    .layer:nth-of-type(3) .tab {
+      background: rgba(66, 111, 100, 0.055);
+    }
+
+    .tab,
+    .layer.out .tab {
+      padding-top: 22px;
+      padding-bottom: 22px;
+      color: var(--ink);
+      background: rgba(56, 68, 63, 0.025);
+      border-right: 1px solid var(--line);
+    }
+
+    .tab::before {
+      display: none;
+    }
+
+    .tab h2 {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .tab .no {
+      color: var(--accent);
+    }
+
+    .pane {
+      padding-top: 21px;
+      padding-bottom: 21px;
+      background: transparent;
+    }
+
+    .cell,
+    .stage-node,
+    .phase-group {
+      color: #2d3936;
+      background: var(--chip);
+      box-shadow: none;
+    }
+
+    .layer:nth-of-type(3) .cell,
+    .layer:nth-of-type(3) .phase-group {
+      background: rgba(66, 111, 100, 0.085);
+    }
+
+    .layer:nth-of-type(4) .cell {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .phase-group .phase-item {
+      color: #2d3936;
+    }
+
+    .cell.spine {
+      flex: none;
+      justify-content: center;
+      width: 108px;
+      color: #64736e;
+      background: transparent;
+      border-color: #9caaa5;
+    }
+
+    .cell.principle {
+      color: #20352f;
+      background: #e1eae5;
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    .cell.principle .op {
+      color: var(--accent);
+    }
+
+    .cell.principle .side.no {
+      color: #7e8985;
+      background: rgba(255, 255, 255, 0.42);
+      border-left-color: rgba(66, 111, 100, 0.16);
+    }
+
+    .chips:has(.spine) {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    .chips:has(.spine) .edge {
+      margin-left: auto;
+    }
+
+    .row.compose-row {
+      grid-template-columns: var(--gutter) 1fr auto;
+      grid-template-rows: auto auto auto;
+      row-gap: 9px;
+      align-items: center;
+    }
+
+    .compose-side {
+      grid-column: 1;
+      grid-row: 1 / 4;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: subgrid;
+      column-gap: 8px;
+      align-items: center;
+    }
+
+    .compose-side .kicker {
+      grid-column: 1;
+      grid-row: 1 / 4;
+      align-self: center;
+    }
+
+    .compose-side .tag {
+      grid-column: 2;
+      font-size: 12.5px;
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--ink);
+      text-align: right;
+    }
+
+    .compose-k1 { grid-row: 1; }
+    .compose-k2 { grid-row: 2; }
+    .compose-k3 { grid-row: 3; }
+
+    .compose-c1 { grid-column: 2; grid-row: 1; justify-self: start; }
+    .compose-c2 { grid-column: 2; grid-row: 2; justify-self: start; }
+    .compose-c3 { grid-column: 2; grid-row: 3; justify-self: start; }
+
+    .compose-trail {
+      grid-column: 3;
+      grid-row: 1 / 4;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="titlebar">
+      <h1>Lulu Dev Workflow</h1>
+      <div class="meta">研发工作流 · 架构总图</div>
+    </header>
+
+    <div class="band">工作流</div>
+
+    <section class="layer">
+      <div class="tab">
+        <div class="no">01</div>
+        <h2>Workflow Collaboration</h2>
+        <p>交互形态</p>
+      </div>
+      <div class="pane">
+        <div class="row">
+          <div class="kicker">Stage Skills</div>
+          <div class="stage-dag" role="img" aria-label="stage 依赖图：lulu-brainstorm 分出产品线与技术线，汇于 lulu-plan、lulu-tasks、lulu-code、lulu-review">
+            <div class="stage-node">lulu-brainstorm</div>
+            <div class="stage-tracks">
+              <div class="track">
+                <span class="arrow">→</span>
+                <div class="stage-node">lulu-bet</div>
+                <span class="arrow">→</span>
+                <div class="stage-node">lulu-spec</div>
+              </div>
+              <div class="track">
+                <span class="arrow">→</span>
+                <div class="stage-node">lulu-approach</div>
+                <span class="arrow">→</span>
+                <div class="stage-node">lulu-design</div>
+              </div>
+            </div>
+            <div class="stage-merge">
+              <span class="arrow">→</span>
+              <div class="stage-node">lulu-plan</div>
+              <span class="arrow">→</span>
+              <div class="stage-node">lulu-tasks</div>
+              <span class="arrow">→</span>
+              <div class="stage-node">lulu-code</div>
+              <span class="arrow">→</span>
+              <div class="stage-node">lulu-review</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layer">
+      <div class="tab">
+        <div class="no">02</div>
+        <h2>Harness Engineering</h2>
+        <p>基础能力</p>
+      </div>
+      <div class="pane">
+        <div class="row">
+          <div class="kicker">会话控制</div>
+          <div class="chips">
+            <span class="cell">多 Cycle 隔离<span class="dot">·</span>跨 Stage 交付<span class="dot">·</span>跨会话恢复<span class="dot">·</span>子设计并行<span class="dot">·</span>状态持久化</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="kicker">SDD 驱动</div>
+          <div class="chips">
+            <div class="phase-group">
+              <span class="phase-item">product decision.md</span>
+              <span class="phase-split">→</span>
+              <span class="phase-item">spec.md</span>
+              <span class="phase-split">→</span>
+              <span class="phase-item">tech decision.md</span>
+              <span class="phase-split">→</span>
+              <span class="phase-item">design.md</span>
+              <span class="phase-split">→</span>
+              <span class="phase-item">plan.md</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="kicker">Eval 评测</div>
+          <div class="chips">
+            <span class="cell">探测评估<span class="dot">·</span>编排修复<span class="dot">·</span>问题阻断</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="kicker">上下文工程</div>
+          <div class="chips">
+            <span class="cell">渐进披露<span class="dot">·</span>Agent 隔离<span class="dot">·</span>约束 · 意图 · Scope<span class="dot">·</span>Re-inject</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="kicker">控制模型</div>
+          <div class="chips">
+            <span class="cell">状态机模型<span class="dot">·</span>门控模型</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="kicker">Hook</div>
+          <div class="chips">
+            <span class="cell">会话绑定<span class="dot">·</span>写入控制<span class="dot">·</span>日志记录<span class="dot">·</span>强制注入<span class="dot">·</span>执行提醒</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="kicker">编码</div>
+          <div class="chips">
+            <span class="cell">Git 控制<span class="dot">·</span>TDD</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layer">
+      <div class="tab">
+        <div class="no">03</div>
+        <h2>Domain Modeling</h2>
+        <p>核心模型</p>
+      </div>
+      <div class="pane">
+        <div class="row">
+          <div class="kicker">Brainstorm 建模</div>
+          <div class="chips">
+            <div class="phase-group">
+              <span class="phase-item">探墙</span>
+              <span class="phase-split">→</span>
+              <span class="phase-item">推墙</span>
+              <span class="phase-split">→</span>
+              <span class="phase-item">新认知</span>
+            </div>
+            <span class="edge"></span>
+            <span class="cell spine">图式理论</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="kicker">决策建模</div>
+          <div class="chips">
+            <div class="phase-group">
+              <span class="phase-item">问题澄清</span>
+              <span class="phase-split">→</span>
+              <span class="phase-item">方向决策</span>
+              <span class="phase-split">→</span>
+              <span class="phase-item">维度诊断</span>
+              <span class="phase-split">→</span>
+              <span class="phase-item">风险评估</span>
+            </div>
+            <span class="edge"></span>
+            <span class="cell spine">持续风险释放</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="kicker">Eval 建模</div>
+          <div class="chips">
+            <span class="cell">EvalTarget<span class="dot">·</span>EvalSoT<span class="dot">·</span>EvalMethod<span class="dot">·</span>Dimension<span class="dot">·</span>Finding<span class="dot">·</span>EvalCause</span>
+            <span class="edge"></span>
+            <span class="cell spine">场景配置化</span>
+          </div>
+        </div>
+        <div class="row compose-row">
+          <div class="compose-side">
+            <div class="kicker">Compose<br />写作建模</div>
+            <div class="tag compose-k1">配置</div>
+            <div class="tag compose-k2">引擎</div>
+            <div class="tag compose-k3">本体</div>
+          </div>
+          <span class="cell compose-c1">Role<span class="dot">·</span>Domain<span class="dot">·</span>Registry<span class="dot">·</span>Form<span class="dot">·</span>KW</span>
+          <div class="compose-trail">
+            <span class="edge"></span>
+            <span class="cell spine">Stage 配置化</span>
+          </div>
+          <span class="cell compose-c2">归纳引擎<span class="dot">·</span>演绎引擎</span>
+          <span class="cell compose-c3">事实<span class="dot">·</span>视角<span class="dot">·</span>叙事弧 + 写作</span>
+        </div>
+        <div class="row">
+          <div class="kicker">Core Skills</div>
+          <div class="chips">
+            <span class="cell">brainstorm<span class="dot">·</span>decision<span class="dot">·</span>compose<span class="dot">·</span>eval</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="band">设计</div>
+
+    <section class="layer out mid">
+      <div class="tab">
+        <div class="no">04</div>
+        <h2>SKILL Design<br />Paradigm</h2>
+        <p>构建方式</p>
+      </div>
+      <div class="pane">
+        <div class="row">
+          <div class="kicker">SKILL 范式</div>
+          <div class="chips">
+            <span class="cell">薄编排<span class="dot">·</span>认知地图<span class="dot">·</span>机械执行<span class="dot">·</span>数据层</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layer out mid">
+      <div class="tab">
+        <div class="no">05</div>
+        <h2>AI Collaboration Cognition</h2>
+        <p>底层判断</p>
+      </div>
+      <div class="pane">
+        <div class="row">
+          <div class="kicker"></div>
+          <div class="chips">
+            <span class="cell principle">AI思考<span class="op">≠</span>人理解</span>
+            <span class="cell principle">充分发散<span class="arrow">→</span>再收敛</span>
+            <span class="cell principle verdict">
+              <span class="side">AI 驱动人<span class="mark">✓</span></span>
+              <span class="side no">人驱动 AI<span class="mark">×</span></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
