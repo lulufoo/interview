@@ -3,113 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Interview · 目录</title>
+  <title>Interview</title>
   <style>
-    :root {
-      --ink: #1c1917;
-      --muted: #78716c;
-      --line: #e7e5e4;
-      --paper: #f4f3ef;
-      --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", serif;
-      --sans: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", sans-serif;
-    }
-
     * { box-sizing: border-box; }
     html, body { margin: 0; }
 
     body {
-      font-family: var(--sans);
-      color: var(--ink);
-      background: var(--paper);
-      padding: 28px 24px 40px;
+      font-family: "Avenir Next", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", sans-serif;
+      color: #1c1917;
+      background: #f4f3ef;
+      padding: 56px 24px;
       -webkit-font-smoothing: antialiased;
     }
 
-    .page {
-      width: min(640px, 100%);
+    main {
+      width: min(440px, 100%);
       margin: 0 auto;
-      background: #fff;
-      border: 1px solid var(--line);
-      overflow: hidden;
-      box-shadow: 0 20px 48px rgba(50, 58, 55, 0.1);
     }
 
-    .titlebar {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 28px;
-      padding: 20px 26px 18px;
-      color: #f4f3ed;
-      background: #26312f;
+    h1 {
+      margin: 0 0 24px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      color: #78716c;
     }
 
-    .titlebar h1 {
-      margin: 0;
-      font-family: var(--serif);
-      font-size: 23px;
-      font-weight: 600;
-      letter-spacing: -0.025em;
-    }
-
-    .titlebar .meta {
-      color: #aeb9b5;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-    }
-
-    .list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .list a {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 20px;
-      padding: 18px 26px;
+    a {
+      display: block;
+      padding: 14px 0;
       color: inherit;
       text-decoration: none;
-      border-top: 1px solid var(--line);
+      border-top: 1px solid #e7e5e4;
     }
 
-    .list a:first-child {
-      border-top: 0;
+    a:last-child {
+      border-bottom: 1px solid #e7e5e4;
     }
 
-    .list a:hover {
-      background: #faf9f6;
-    }
-
-    .item-title {
-      font-size: 15px;
+    a strong {
+      display: block;
+      font-size: 16px;
       font-weight: 600;
       letter-spacing: -0.02em;
     }
 
-    .item-desc {
-      color: var(--muted);
+    a span {
+      display: block;
+      margin-top: 4px;
       font-size: 12px;
-      letter-spacing: 0.04em;
+      color: #78716c;
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header class="titlebar">
-      <h1>Interview</h1>
-      <div class="meta">目录</div>
-    </header>
-    <ul class="list">
-      <li>
-        <a href="lulu-dev-workflow.html">
-          <span class="item-title">Lulu Dev Workflow</span>
-          <span class="item-desc">研发工作流 · 架构总图</span>
-        </a>
-      </li>
-    </ul>
-  </div>
+  <main>
+    <h1>INTERVIEW</h1>
+    <a href="lulu-dev-workflow.html">
+      <strong>Lulu Dev Workflow</strong>
+      <span>研发工作流 · 架构总图</span>
+    </a>
+  </main>
 </body>
 </html>
