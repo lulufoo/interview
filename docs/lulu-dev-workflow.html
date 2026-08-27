@@ -154,6 +154,10 @@
       justify-content: center;
     }
 
+    #cognition .pane {
+      align-items: center;
+    }
+
     /* ---------- rows ---------- */
 
     .row {
@@ -183,6 +187,14 @@
       flex-wrap: wrap;
       gap: 6px;
       align-items: center;
+    }
+
+    .chips.single-line {
+      flex-wrap: nowrap;
+    }
+
+    .chips.single-line .cell {
+      flex: none;
     }
 
     .stack {
@@ -1134,23 +1146,21 @@
       </div>
     </section>
 
-    <section class="layer out mid">
+    <section class="layer out mid" id="cognition">
       <div class="tab">
         <div class="no">05</div>
         <h2>AI Collaboration Cognition</h2>
         <p>底层判断</p>
       </div>
       <div class="pane">
-        <div class="row">
-          <div class="kicker"></div>
-          <div class="chips">
+        <div class="chips single-line">
             <span class="cell principle">AI思考<span class="op">≠</span>人理解</span>
-            <span class="cell principle">充分发散<span class="arrow">→</span>再收敛</span>
+            <span class="cell principle">充分发散<span class="dot">·</span>再收敛</span>
+            <span class="cell principle">任务拆解<span class="dot">·</span>目标驱动</span>
             <span class="cell principle verdict">
               <span class="side">AI 驱动人<span class="mark">✓</span></span>
               <span class="side no">人驱动 AI<span class="mark">×</span></span>
             </span>
-          </div>
         </div>
       </div>
     </section>
