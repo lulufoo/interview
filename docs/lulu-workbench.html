@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Lulu Workbench</title>
+<style>
+  html,body{margin:0;background:#2a2723;}
+  body{display:flex;align-items:center;justify-content:center;min-height:100vh;}
+  svg{display:block;font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;}
+  .ink{fill:#1c1916}
+  .muted{fill:#6b655f}
+  .accent{fill:#b4532a}
+  .foot{font-size:26px;font-weight:700;letter-spacing:4px}
+  .lbl{font-size:24px;font-weight:700}
+  .sub{font-size:15px;font-weight:500}
+  .tag{font-size:17px;font-weight:700}
+  .card-lbl{font-size:24px;font-weight:700}
+  .node-lbl{font-size:20px;font-weight:700}
+  .win{fill:#fff;stroke:#d4cdc2;stroke-width:2}
+  .win-ai{fill:#fff8f1;stroke:#e4d4c4;stroke-width:2}
+  .win-browser{fill:#f7f8fa;stroke:#c9cfd6;stroke-width:2}
+  .win-dark{fill:#4a443d;stroke:#4a443d;stroke-width:2}
+  .bar{fill:#e6e0d5}
+  .bar-dark{fill:#3a352f}
+  .arrow{fill:none;stroke:#b4532a;stroke-width:5;stroke-linecap:round}
+  .flow-lbl{font-size:22px;font-weight:700;letter-spacing:2px}
+  .pill-dark{fill:#f3efe6}
+  .pill-light{fill:#fff;stroke:#d4cdc2;stroke-width:2}
+  .tile{fill:#f7f4ee;stroke:#e6e0d5;stroke-width:2}
+  .node{fill:#fff;stroke:#e6d5c8;stroke-width:2}
+  .tent{fill:none;stroke:#b4532a;stroke-width:2.5;stroke-dasharray:7 7;opacity:.8}
+  .bus{fill:none;stroke:#d9a888;stroke-width:2.5}
+  .flow{fill:none;stroke:#b4532a;stroke-width:4;stroke-linecap:round;stroke-dasharray:1 10;opacity:.85}
+  .pv{fill:#d4cdc2}
+  .badge{fill:#ece7dd}
+  .badge-t{fill:#6b655f;font-size:12px;font-weight:700}
+  .tile-name{font-size:22px;font-weight:700}
+  .grow{fill:none;stroke:#b4532a;stroke-width:2.5;stroke-dasharray:6 5}
+</style>
+</head>
+<body>
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="head" markerWidth="14" markerHeight="14" refX="10" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L14,7 L0,14 z" fill="#b4532a"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#1c1916" flood-opacity=".14"/>
+    </filter>
+    <radialGradient id="glow" cx="50%" cy="50%">
+      <stop offset="0" stop-color="#f4b07a" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#f4b07a" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="head-sm" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b4532a"/>
+    </marker>
+    <radialGradient id="orb" cx="40%" cy="35%">
+      <stop offset="0" stop-color="#f4b07a"/>
+      <stop offset="1" stop-color="#b4532a"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#f3efe6"/>
+
+  <!-- ============ Title ============ -->
+  <text x="96" y="104" class="ink" font-size="48" font-weight="700">Lulu Workbench</text>
+  <text x="96" y="146" class="accent" font-size="26" font-weight="700" letter-spacing="1">个人知识工作台，你的本地知识大脑</text>
+
+  <!-- ============ LEFT: places you work ============ -->
+
+  <!-- AI assistant (light: external tool) -->
+  <g transform="translate(140,220)">
+    <rect width="340" height="180" rx="14" class="win-ai" filter="url(#shadow)"/>
+    <rect width="340" height="32" rx="14" fill="#efe4d6"/>
+    <rect y="18" width="340" height="14" fill="#efe4d6"/>
+    <circle cx="20" cy="16" r="5" fill="#d8c4b0"/><circle cx="38" cy="16" r="5" fill="#d8c4b0"/><circle cx="56" cy="16" r="5" fill="#d8c4b0"/>
+    <!-- code -->
+    <rect x="24" y="46" width="60" height="9" rx="4" fill="#eea36b"/>
+    <rect x="94" y="46" width="90" height="9" rx="4" class="bar"/>
+    <rect x="40" y="64" width="120" height="9" rx="4" class="bar"/>
+    <rect x="40" y="82" width="70" height="9" rx="4" fill="#a9c4b8"/>
+    <rect x="120" y="82" width="60" height="9" rx="4" class="bar"/>
+    <rect x="24" y="100" width="52" height="9" rx="4" fill="#eea36b"/>
+    <rect x="40" y="118" width="100" height="9" rx="4" class="bar"/>
+    <!-- chat panel -->
+    <rect x="206" y="42" width="114" height="86" rx="12" fill="#f7f4ee" stroke="#e6e0d5" stroke-width="1.5"/>
+    <rect x="220" y="56" width="80" height="8" rx="4" fill="#d4cdc2"/>
+    <rect x="220" y="72" width="60" height="8" rx="4" fill="#d4cdc2"/>
+    <rect x="220" y="88" width="70" height="8" rx="4" fill="#d4cdc2"/>
+    <rect x="236" y="106" width="70" height="12" rx="6" fill="#b4532a" opacity=".85"/>
+    <!-- scenario tags -->
+    <rect x="24" y="138" width="66" height="30" rx="15" class="pill-light"/>
+    <text x="57" y="159" class="tag ink" text-anchor="middle">对话</text>
+    <rect x="100" y="138" width="66" height="30" rx="15" class="pill-light"/>
+    <text x="133" y="159" class="tag ink" text-anchor="middle">分析</text>
+    <rect x="176" y="138" width="66" height="30" rx="15" class="pill-light"/>
+    <text x="209" y="159" class="tag ink" text-anchor="middle">总结</text>
+    <!-- chat-bubble badge -->
+    <g transform="translate(300,-14)">
+      <circle r="24" fill="#b4532a"/>
+      <path d="M-12,-9 h24 a4,4 0 0 1 4,4 v12 a4,4 0 0 1 -4,4 h-10 l-7,6 v-6 h-7 a4,4 0 0 1 -4,-4 v-12 a4,4 0 0 1 4,-4 z" fill="#f3efe6"/>
+      <rect x="-7" y="-2" width="14" height="2.5" rx="1.25" fill="#b4532a"/>
+      <rect x="-7" y="3" width="9" height="2.5" rx="1.25" fill="#b4532a"/>
+    </g>
+  </g>
+  <text x="510" y="302" class="lbl ink">AI 助手</text>
+  <text x="510" y="330" class="sub muted">Cursor · Codex · Claude</text>
+
+  <!-- Browser -->
+  <g transform="translate(140,440)">
+    <rect width="340" height="180" rx="14" class="win-browser" filter="url(#shadow)"/>
+    <rect width="340" height="32" rx="14" fill="#e4e7ea"/>
+    <rect y="18" width="340" height="14" fill="#e4e7ea"/>
+    <circle cx="20" cy="16" r="5" fill="#c5ccd3"/><circle cx="38" cy="16" r="5" fill="#c5ccd3"/><circle cx="56" cy="16" r="5" fill="#c5ccd3"/>
+    <rect x="80" y="9" width="180" height="14" rx="7" fill="#fff"/>
+    <rect x="24" y="46" width="110" height="76" rx="8" fill="#dce1e6"/>
+    <path d="M68,72 L92,84 L68,96 z" fill="#b4532a"/>
+    <rect x="150" y="50" width="160" height="10" rx="5" fill="#dce1e6"/>
+    <rect x="150" y="72" width="140" height="10" rx="5" fill="#dce1e6"/>
+    <rect x="150" y="94" width="150" height="10" rx="5" fill="#dce1e6"/>
+    <rect x="150" y="116" width="100" height="10" rx="5" fill="#dce1e6"/>
+    <rect x="24" y="138" width="66" height="30" rx="15" class="pill-light"/>
+    <text x="57" y="159" class="tag ink" text-anchor="middle">文章</text>
+    <rect x="100" y="138" width="66" height="30" rx="15" class="pill-light"/>
+    <text x="133" y="159" class="tag ink" text-anchor="middle">视频</text>
+    <rect x="176" y="138" width="88" height="30" rx="15" class="pill-light"/>
+    <text x="220" y="159" class="tag ink" text-anchor="middle">稍后读</text>
+    <g transform="translate(300,-14)">
+      <circle r="24" fill="#b4532a"/>
+      <path d="M-9,-11 h6 a3,3 0 0 1 6,0 h6 v6 a3,3 0 0 1 0,6 v6 h-6 a3,3 0 0 1 -6,0 h-6 v-6 a3,3 0 0 1 0,-6 z" fill="#f3efe6"/>
+    </g>
+  </g>
+  <text x="510" y="522" class="lbl ink">浏览器</text>
+  <text x="510" y="550" class="sub muted">Chrome</text>
+
+  <!-- Phone: another Workbench client -->
+  <g transform="translate(226,656)">
+    <rect width="168" height="300" rx="24" class="win-dark" filter="url(#shadow)"/>
+    <rect x="10" y="12" width="148" height="276" rx="16" fill="#f3efe6"/>
+    <rect x="62" y="4" width="44" height="6" rx="3" fill="#7a736a"/>
+    <!-- mini title bar -->
+    <rect x="10" y="12" width="148" height="26" rx="16" fill="#ece7dd"/>
+    <rect x="10" y="26" width="148" height="12" fill="#ece7dd"/>
+    <text x="84" y="31" class="muted" font-size="11" font-weight="700" text-anchor="middle">Workbench</text>
+    <!-- scenario tags -->
+    <rect x="22" y="48" width="56" height="22" rx="11" class="pill-light"/>
+    <text x="50" y="64" class="ink" font-size="13" font-weight="700" text-anchor="middle">闪念</text>
+    <rect x="86" y="48" width="56" height="22" rx="11" class="pill-light"/>
+    <text x="114" y="64" class="ink" font-size="13" font-weight="700" text-anchor="middle">笔记</text>
+
+    <!-- voice message (you) -->
+    <rect x="62" y="86" width="84" height="24" rx="10" fill="#b4532a" opacity=".9"/>
+    <g fill="#f3efe6">
+      <rect x="74" y="95" width="2.5" height="6" rx="1.25"/><rect x="79" y="92" width="2.5" height="12" rx="1.25"/><rect x="84" y="90" width="2.5" height="16" rx="1.25"/><rect x="89" y="94" width="2.5" height="8" rx="1.25"/><rect x="94" y="91" width="2.5" height="14" rx="1.25"/><rect x="99" y="95" width="2.5" height="6" rx="1.25"/>
+    </g>
+    <rect x="112" y="96" width="22" height="4" rx="2" fill="#f3efe6" opacity=".8"/>
+
+    <!-- reply -->
+    <rect x="22" y="120" width="96" height="30" rx="10" fill="#fff" stroke="#e6e0d5" stroke-width="1.5"/>
+    <rect x="32" y="129" width="74" height="4.5" rx="2.25" fill="#d4cdc2"/>
+    <rect x="32" y="138" width="50" height="4.5" rx="2.25" fill="#d4cdc2"/>
+
+    <!-- voice message (you) -->
+    <rect x="78" y="160" width="68" height="24" rx="10" fill="#b4532a" opacity=".9"/>
+    <g fill="#f3efe6">
+      <rect x="90" y="169" width="2.5" height="6" rx="1.25"/><rect x="95" y="166" width="2.5" height="12" rx="1.25"/><rect x="100" y="168" width="2.5" height="8" rx="1.25"/><rect x="105" y="165" width="2.5" height="14" rx="1.25"/><rect x="110" y="170" width="2.5" height="4" rx="1.25"/>
+    </g>
+    <rect x="120" y="170" width="16" height="4" rx="2" fill="#f3efe6" opacity=".8"/>
+
+    <!-- reply -->
+    <rect x="22" y="194" width="82" height="26" rx="10" fill="#fff" stroke="#e6e0d5" stroke-width="1.5"/>
+    <rect x="32" y="205" width="60" height="4.5" rx="2.25" fill="#d4cdc2"/>
+
+    <!-- bottom bar: keyboard toggle + hold-to-talk, both h26 -->
+    <rect x="22" y="254" width="22" height="22" rx="7" fill="#fff" stroke="#c9c1b4" stroke-width="1.5"/>
+    <g transform="translate(33,265)">
+      <rect x="-6" y="-4.5" width="12" height="9" rx="2" fill="none" stroke="#6b655f" stroke-width="1.3"/>
+      <rect x="-3.8" y="-2.2" width="1.6" height="1.6" fill="#6b655f"/><rect x="-0.8" y="-2.2" width="1.6" height="1.6" fill="#6b655f"/><rect x="2.2" y="-2.2" width="1.6" height="1.6" fill="#6b655f"/>
+      <rect x="-3" y="0.8" width="6" height="1.4" fill="#6b655f"/>
+    </g>
+    <rect x="50" y="254" width="96" height="22" rx="7" fill="#b4532a"/>
+    <g transform="translate(98,265)">
+      <rect x="-3" y="-7" width="6" height="9" rx="3" fill="#f3efe6"/>
+      <path d="M-5.5,-1 a5.5,5.5 0 0 0 11,0" fill="none" stroke="#f3efe6" stroke-width="1.6"/>
+      <path d="M0,4.5 v2.2" stroke="#f3efe6" stroke-width="1.6" stroke-linecap="round"/>
+    </g>
+    <!-- app badge -->
+    <g transform="translate(168,-4)">
+      <circle r="24" fill="#b4532a"/>
+      <rect x="-10" y="-10" width="20" height="20" rx="6" fill="#f3efe6"/>
+    </g>
+  </g>
+  <text x="510" y="796" class="lbl ink">Workbench 手机端</text>
+  <text x="510" y="824" class="sub muted">Android</text>
+
+  <!-- ============ Two-way flow ============ -->
+  <path d="M650,540 C710,540 750,556 858,556" class="arrow" marker-end="url(#head)"/>
+  <text x="754" y="514" class="flow-lbl accent" text-anchor="middle">沉淀</text>
+  <path d="M858,624 C750,624 710,642 650,642" class="arrow" marker-end="url(#head)"/>
+  <text x="754" y="686" class="flow-lbl accent" text-anchor="middle">提取</text>
+
+  <!-- ============ RIGHT: Workbench window (vertical) ============ -->
+  <text x="1800" y="180" class="lbl ink" text-anchor="end">Workbench Mac 端</text>
+  <g transform="translate(920,200)">
+    <rect x="-3" y="-3" width="886" height="766" rx="23" fill="#4a443d" filter="url(#shadow)"/>
+    <rect width="880" height="760" rx="20" fill="#fff"/>
+    <rect width="880" height="44" rx="20" fill="#4a443d"/>
+    <rect y="24" width="880" height="20" fill="#4a443d"/>
+    <circle cx="24" cy="22" r="6" fill="#7a736a"/><circle cx="46" cy="22" r="6" fill="#7a736a"/><circle cx="68" cy="22" r="6" fill="#7a736a"/>
+    <text x="440" y="28" fill="#f3efe6" font-size="15" font-weight="700" text-anchor="middle" letter-spacing="1">Lulu Workbench</text>
+
+    <!-- sidebar with six mini icons -->
+    <path d="M0,44 h72 v716 h-52 a20,20 0 0 1 -20,-20 z" fill="#f7f4ee"/>
+    <!-- 对话 (active) -->
+    <rect x="16" y="64" width="40" height="40" rx="10" fill="#b4532a" opacity=".9"/>
+    <rect x="25" y="76" width="14" height="10" rx="4" fill="#f3efe6"/>
+    <rect x="32" y="83" width="14" height="10" rx="4" fill="#f3efe6" opacity=".7"/>
+    <!-- 总结 -->
+    <rect x="16" y="116" width="40" height="40" rx="10" fill="#ece7dd"/>
+    <rect x="26" y="128" width="20" height="3.5" rx="1.75" fill="#6b655f"/><rect x="26" y="135" width="15" height="3.5" rx="1.75" fill="#6b655f"/><rect x="26" y="142" width="11" height="3.5" rx="1.75" fill="#6b655f"/>
+    <!-- 文章 -->
+    <rect x="16" y="168" width="40" height="40" rx="10" fill="#ece7dd"/>
+    <rect x="28" y="178" width="16" height="20" rx="2.5" fill="none" stroke="#6b655f" stroke-width="2.2"/>
+    <rect x="32" y="184" width="8" height="2" fill="#6b655f"/><rect x="32" y="189" width="8" height="2" fill="#6b655f"/>
+    <!-- 转录 -->
+    <rect x="16" y="220" width="40" height="40" rx="10" fill="#ece7dd"/>
+    <rect x="25" y="237" width="3" height="6" rx="1.5" fill="#6b655f"/><rect x="30" y="232" width="3" height="16" rx="1.5" fill="#6b655f"/><rect x="35" y="235" width="3" height="10" rx="1.5" fill="#6b655f"/><rect x="40" y="230" width="3" height="20" rx="1.5" fill="#6b655f"/><rect x="45" y="236" width="3" height="8" rx="1.5" fill="#6b655f"/>
+    <!-- 笔记 -->
+    <rect x="16" y="272" width="40" height="40" rx="10" fill="#ece7dd"/>
+    <g transform="translate(36,292) rotate(-45)"><rect x="-3" y="-11" width="6" height="16" rx="1.5" fill="#6b655f"/><path d="M-3,5 L0,10 L3,5 z" fill="#6b655f"/></g>
+    <!-- 专题 -->
+    <rect x="16" y="324" width="40" height="40" rx="10" fill="#ece7dd"/>
+    <rect x="26" y="334" width="20" height="5" rx="1.5" fill="#6b655f"/><rect x="26" y="341.5" width="20" height="5" rx="1.5" fill="#6b655f"/><rect x="26" y="349" width="20" height="5" rx="1.5" fill="#6b655f"/>
+
+    <!-- toolbar row: breadcrumb chip + mini search -->
+    <rect x="96" y="58" width="170" height="30" rx="10" fill="#f7f4ee" stroke="#e6e0d5" stroke-width="1.5"/>
+    <circle cx="114" cy="73" r="5" fill="#b4532a"/>
+    <rect x="126" y="69" width="52" height="8" rx="4" fill="#c9c1b4"/>
+    <rect x="186" y="69" width="6" height="8" rx="2" fill="#d4cdc2"/>
+    <rect x="200" y="69" width="48" height="8" rx="4" fill="#c9c1b4"/>
+    <rect x="656" y="58" width="200" height="30" rx="10" fill="#f7f4ee" stroke="#e6e0d5" stroke-width="1.5"/>
+    <circle cx="676" cy="73" r="6" fill="none" stroke="#8f877c" stroke-width="2"/>
+    <path d="M680.5,77.5 L685,82" stroke="#8f877c" stroke-width="2" stroke-linecap="round"/>
+    <rect x="694" y="69" width="140" height="8" rx="4" fill="#d4cdc2"/>
+
+    <!-- ===== memory: six tiles (3 x 2) with previews ===== -->
+    <g transform="translate(96,104)">
+      <rect width="237" height="150" rx="16" class="tile"/>
+      <rect x="20" y="20" width="26" height="18" rx="7" fill="#b4532a"/>
+      <rect x="32" y="32" width="26" height="18" rx="7" fill="#1c1916"/>
+      <rect x="185" y="16" width="36" height="20" rx="10" class="badge"/>
+      <text x="203" y="30" class="badge-t" text-anchor="middle">128</text>
+      <text x="20" y="84" class="tile-name ink">对话</text>
+      <rect x="20" y="100" width="110" height="12" rx="6" class="pv"/>
+      <rect x="72" y="118" width="140" height="12" rx="6" fill="#efd9cb"/>
+    </g>
+    <g transform="translate(357,104)">
+      <rect width="237" height="150" rx="16" class="tile"/>
+      <rect x="20" y="20" width="34" height="6" rx="3" fill="#b4532a"/>
+      <rect x="20" y="32" width="28" height="6" rx="3" fill="#1c1916"/>
+      <rect x="20" y="44" width="22" height="6" rx="3" fill="#1c1916"/>
+      <rect x="185" y="16" width="36" height="20" rx="10" class="badge"/>
+      <text x="203" y="30" class="badge-t" text-anchor="middle">64</text>
+      <text x="20" y="84" class="tile-name ink">总结</text>
+      <circle cx="26" cy="104" r="4" fill="#b4532a"/><rect x="38" y="100" width="160" height="8" rx="4" class="pv"/>
+      <circle cx="26" cy="122" r="4" fill="#b4532a"/><rect x="38" y="118" width="120" height="8" rx="4" class="pv"/>
+    </g>
+    <g transform="translate(618,104)">
+      <rect width="237" height="150" rx="16" class="tile"/>
+      <rect x="22" y="18" width="26" height="34" rx="4" fill="none" stroke="#1c1916" stroke-width="3"/>
+      <rect x="28" y="26" width="14" height="3" fill="#b4532a"/>
+      <rect x="28" y="33" width="14" height="3" fill="#1c1916"/>
+      <rect x="28" y="40" width="10" height="3" fill="#1c1916"/>
+      <rect x="185" y="16" width="36" height="20" rx="10" class="badge"/>
+      <text x="203" y="30" class="badge-t" text-anchor="middle">212</text>
+      <text x="20" y="84" class="tile-name ink">文章</text>
+      <rect x="20" y="98" width="52" height="34" rx="6" fill="#e6e0d5"/>
+      <rect x="82" y="100" width="130" height="8" rx="4" class="pv"/>
+      <rect x="82" y="114" width="110" height="8" rx="4" class="pv"/>
+      <rect x="82" y="128" width="80" height="6" rx="3" fill="#efd9cb"/>
+    </g>
+    <g transform="translate(96,268)">
+      <rect width="237" height="150" rx="16" class="tile"/>
+      <rect x="20" y="30" width="4" height="12" rx="2" fill="#1c1916"/>
+      <rect x="28" y="22" width="4" height="28" rx="2" fill="#b4532a"/>
+      <rect x="36" y="26" width="4" height="20" rx="2" fill="#1c1916"/>
+      <rect x="44" y="18" width="4" height="36" rx="2" fill="#b4532a"/>
+      <rect x="52" y="28" width="4" height="16" rx="2" fill="#1c1916"/>
+      <rect x="185" y="16" width="36" height="20" rx="10" class="badge"/>
+      <text x="203" y="30" class="badge-t" text-anchor="middle">37</text>
+      <text x="20" y="84" class="tile-name ink">转录</text>
+      <rect x="20" y="98" width="36" height="20" rx="6" fill="#b4532a" opacity=".85"/>
+      <rect x="66" y="100" width="148" height="8" rx="4" class="pv"/>
+      <rect x="66" y="114" width="96" height="8" rx="4" class="pv"/>
+      <rect x="20" y="128" width="170" height="6" rx="3" fill="#efd9cb"/>
+    </g>
+    <g transform="translate(357,268)">
+      <rect width="237" height="150" rx="16" class="tile"/>
+      <g transform="translate(36,36) rotate(-45)">
+        <rect x="-5" y="-20" width="10" height="30" rx="2" fill="#1c1916"/>
+        <path d="M-5,10 L0,19 L5,10 z" fill="#b4532a"/>
+        <rect x="-5" y="-20" width="10" height="6" rx="2" fill="#b4532a"/>
+      </g>
+      <rect x="185" y="16" width="36" height="20" rx="10" class="badge"/>
+      <text x="203" y="30" class="badge-t" text-anchor="middle">356</text>
+      <text x="20" y="84" class="tile-name ink">笔记</text>
+      <rect x="20" y="100" width="196" height="8" rx="4" class="pv"/>
+      <rect x="20" y="114" width="160" height="8" rx="4" class="pv"/>
+      <rect x="20" y="128" width="110" height="6" rx="3" fill="#efd9cb"/>
+    </g>
+    <g transform="translate(618,268)">
+      <rect width="237" height="150" rx="16" class="tile"/>
+      <rect x="20" y="18" width="34" height="9" rx="3" fill="#b4532a"/>
+      <rect x="20" y="31" width="34" height="9" rx="3" fill="#1c1916"/>
+      <rect x="20" y="44" width="34" height="9" rx="3" fill="#1c1916"/>
+      <rect x="185" y="16" width="36" height="20" rx="10" class="badge"/>
+      <text x="203" y="30" class="badge-t" text-anchor="middle">18</text>
+      <text x="20" y="84" class="tile-name ink">专题</text>
+      <rect x="36" y="96" width="176" height="38" rx="8" fill="#e6e0d5"/>
+      <rect x="28" y="102" width="188" height="36" rx="8" fill="#efe9de"/>
+      <rect x="20" y="108" width="196" height="30" rx="8" fill="#fff" stroke="#e6e0d5" stroke-width="1.5"/>
+      <rect x="36" y="119" width="120" height="8" rx="4" class="pv"/>
+    </g>
+
+    <!-- growth: 笔记 → 专题 -->
+    <path d="M570,286 C600,248 640,248 655,284" class="grow" marker-end="url(#head-sm)"/>
+
+    <!-- ===== Agent zone (bottom band) ===== -->
+    <rect x="92" y="430" width="764" height="306" rx="18" fill="#fff7f2" stroke="#efd9cb" stroke-width="2"/>
+
+    <!-- flowing dots: tiles -> agent -->
+    <path d="M214,418 C214,462 380,472 430,488" class="flow"/>
+    <path d="M476,418 V452" class="flow"/>
+    <path d="M736,418 C736,462 570,472 520,488" class="flow"/>
+
+    <!-- Knowledge Agent orb with glow -->
+    <g transform="translate(476,500)">
+      <circle r="78" fill="url(#glow)"/>
+      <circle r="44" fill="url(#orb)"/>
+      <path d="M-2,-20 C-12,-24 -24,-16 -22,-6 C-28,-2 -26,10 -18,12 C-16,20 -6,22 -2,16 Z" fill="#f3efe6"/>
+      <path d="M2,-20 C12,-24 24,-16 22,-6 C28,-2 26,10 18,12 C16,20 6,22 2,16 Z" fill="#f3efe6"/>
+      <path d="M-16,-8 c4,-3 8,-1 9,3 M-19,3 c5,-2 9,0 11,4 M16,-8 c-4,-3 -8,-1 -9,3 M19,3 c-5,-2 -9,0 -11,4" fill="none" stroke="#b4532a" stroke-width="2" stroke-linecap="round"/>
+      <g transform="translate(36,34)">
+        <circle r="15" fill="#f3efe6" stroke="#b4532a" stroke-width="2"/>
+        <circle cy="-4" r="4.5" fill="#1c1916"/>
+        <path d="M-8,9 a8,6 0 0 1 16,0 z" fill="#b4532a"/>
+      </g>
+      <text y="72" class="node-lbl ink" text-anchor="middle">知识 Agent</text>
+    </g>
+
+    <!-- bus to three nodes -->
+    <path d="M476,580 V596 M300,596 H652 M300,596 V606 M476,596 V606 M652,596 V606" class="bus"/>
+
+    <!-- 检索 -->
+    <g transform="translate(240,606)">
+      <rect width="136" height="52" rx="14" class="node"/>
+      <circle cx="28" cy="26" r="9" fill="none" stroke="#1c1916" stroke-width="3.5"/>
+      <path d="M35,33 L43,41" stroke="#b4532a" stroke-width="4" stroke-linecap="round"/>
+      <text x="64" y="34" class="node-lbl ink">检索</text>
+    </g>
+    <!-- 提炼 -->
+    <g transform="translate(408,606)">
+      <rect width="136" height="52" rx="14" class="node"/>
+      <path d="M20,16 h26 l-9,12 v12 h-8 v-12 z" fill="#b4532a"/>
+      <text x="64" y="34" class="node-lbl ink">提炼</text>
+    </g>
+    <!-- 生成 -->
+    <g transform="translate(576,606)">
+      <rect width="136" height="52" rx="14" class="node"/>
+      <rect x="20" y="14" width="20" height="26" rx="3" fill="none" stroke="#1c1916" stroke-width="3"/>
+      <rect x="25" y="21" width="10" height="2.5" fill="#1c1916"/>
+      <rect x="25" y="27" width="7" height="2.5" fill="#1c1916"/>
+      <g transform="translate(42,34) rotate(-45)">
+        <rect x="-3" y="-14" width="6" height="18" rx="1.5" fill="#b4532a"/>
+        <path d="M-3,4 L0,9 L3,4 z" fill="#1c1916"/>
+      </g>
+      <text x="64" y="34" class="node-lbl ink">生成</text>
+    </g>
+
+    <!-- input box (full width) -->
+    <rect x="96" y="676" width="700" height="44" rx="14" fill="#fff" stroke="#c9c1b4" stroke-width="2"/>
+    <rect x="116" y="694" width="180" height="8" rx="4" fill="#d4cdc2"/>
+    <rect x="116" y="690" width="2" height="16" fill="#b4532a"/>
+    <g transform="translate(833,698)">
+      <circle r="21" fill="#b4532a"/>
+      <path d="M-7,3 L0,-7 L7,3 M0,-7 v14" fill="none" stroke="#f3efe6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- ============ Block feet ============ -->
+  <text x="410" y="1010" class="foot accent" text-anchor="middle">随时随地记录</text>
+  <text x="1360" y="1010" class="foot accent" text-anchor="middle">知识沉淀生长</text>
+
+  <!-- footer: intentionally empty (Q9 decided: no footnote; "本地" lives in the tagline) -->
+</svg>
+</body>
+</html>
