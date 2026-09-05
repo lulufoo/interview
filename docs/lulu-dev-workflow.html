@@ -718,18 +718,18 @@
     /* ---------- calm interview brief ---------- */
 
     :root {
-      --ink: #202b29;
-      --muted: #69746f;
-      --line: #d8d9d3;
-      --line-2: #e4e4de;
-      --paper: #e7e5df;
-      --wash: #f1f1ec;
-      --edge: #8c9994;
-      --accent: #426f64;
-      --accent-soft: rgba(66, 111, 100, 0.1);
-      --panel: #f7f6f2;
-      --panel-2: #f4f3ef;
-      --chip: #ecece7;
+      --ink: #1c1916;
+      --muted: #6b655f;
+      --line: #e6e0d5;
+      --line-2: #ece7dd;
+      --paper: #f3efe6;
+      --wash: #fff7f2;
+      --edge: #c4a090;
+      --accent: #b4532a;
+      --accent-soft: rgba(180, 83, 42, 0.1);
+      --panel: #ffffff;
+      --panel-2: #f7f4ee;
+      --chip: #f7f4ee;
     }
 
     body {
@@ -742,47 +742,47 @@
     .page {
       gap: 0;
       background: var(--panel);
-      border: 1px solid rgba(69, 79, 75, 0.16);
+      border: 1px solid rgba(74, 68, 61, 0.16);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 20px 48px rgba(50, 58, 55, 0.1);
+      box-shadow: 0 20px 48px rgba(28, 25, 22, 0.1);
     }
 
     .titlebar {
       padding: 20px 26px 18px;
-      color: #f4f3ed;
-      background: #26312f;
+      color: #f3efe6;
+      background: #4a443d;
     }
 
     .titlebar h1 {
-      color: #f4f3ed;
+      color: #f3efe6;
       font-size: 23px;
       letter-spacing: -0.025em;
     }
 
     .titlebar .meta {
-      color: #aeb9b5;
+      color: #c4bbb0;
     }
 
     .titlebar .meta a {
       color: inherit;
       text-decoration: none;
-      border-bottom: 1px solid rgba(174, 185, 181, 0.45);
+      border-bottom: 1px solid rgba(196, 187, 176, 0.45);
     }
 
     .titlebar .meta a:hover {
-      color: #f4f3ed;
+      color: #f3efe6;
     }
 
     .band {
       padding: 13px 24px 9px;
-      color: #5e746d;
-      background: #e9ebe6;
-      border-top: 1px solid rgba(69, 79, 75, 0.08);
+      color: #b4532a;
+      background: #f7f4ee;
+      border-top: 1px solid rgba(74, 68, 61, 0.08);
     }
 
     .band::after {
-      background: linear-gradient(90deg, rgba(66, 111, 100, 0.28), transparent);
+      background: linear-gradient(90deg, rgba(180, 83, 42, 0.28), transparent);
     }
 
     .layer,
@@ -795,17 +795,17 @@
     }
 
     .layer.out {
-      background: #f0f1ec;
+      background: #f7f4ee;
     }
 
     .layer:nth-of-type(3) {
       position: relative;
-      background: #edf2ef;
+      background: #fff7f2;
       box-shadow: inset 4px 0 0 var(--accent);
     }
 
     .layer:nth-of-type(3) .tab {
-      background: rgba(66, 111, 100, 0.055);
+      background: rgba(180, 83, 42, 0.06);
     }
 
     .tab,
@@ -813,7 +813,7 @@
       padding-top: 22px;
       padding-bottom: 22px;
       color: var(--ink);
-      background: rgba(56, 68, 63, 0.025);
+      background: rgba(28, 25, 22, 0.03);
       border-right: 1px solid var(--line);
     }
 
@@ -839,14 +839,14 @@
     .cell,
     .stage-node,
     .phase-group {
-      color: #2d3936;
+      color: #1c1916;
       background: var(--chip);
       box-shadow: none;
     }
 
     .layer:nth-of-type(3) .cell,
     .layer:nth-of-type(3) .phase-group {
-      background: rgba(66, 111, 100, 0.085);
+      background: rgba(180, 83, 42, 0.08);
     }
 
     .layer:nth-of-type(4) .cell {
@@ -855,21 +855,21 @@
     }
 
     .phase-group .phase-item {
-      color: #2d3936;
+      color: #1c1916;
     }
 
     .cell.spine {
       flex: none;
       justify-content: center;
       width: 108px;
-      color: #64736e;
+      color: #b4532a;
       background: transparent;
-      border-color: #9caaa5;
+      border-color: #efd9cb;
     }
 
     .cell.principle {
-      color: #20352f;
-      background: #e1eae5;
+      color: #1c1916;
+      background: #fff7f2;
       border-color: transparent;
       box-shadow: none;
     }
@@ -879,9 +879,9 @@
     }
 
     .cell.principle .side.no {
-      color: #7e8985;
+      color: #6b655f;
       background: rgba(255, 255, 255, 0.42);
-      border-left-color: rgba(66, 111, 100, 0.16);
+      border-left-color: rgba(180, 83, 42, 0.16);
     }
 
     .chips:has(.spine) {
