@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lulu Dev Workflow · 架构总图</title>
+  <title>Lulu Workflow · 架构总图</title>
   <style>
     :root {
       --ink: #1c1917;
@@ -349,6 +349,30 @@
     .stage-merge {
       display: flex;
       align-items: center;
+    }
+
+    .cycle-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cycle-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cycle-label {
+      flex: none;
+      width: 12em;
+    }
+
+    .cycle-note {
+      font-size: 11px;
+      line-height: 1.3;
+      color: var(--muted);
+      white-space: nowrap;
     }
 
     .phase-group {
@@ -951,7 +975,7 @@
 <body>
   <div class="page">
     <header class="titlebar">
-      <h1>Lulu Dev Workflow</h1>
+      <h1>Lulu Workflow</h1>
       <div class="meta"><a href="index.html">目录</a> · 研发工作流 · 架构总图</div>
     </header>
 
@@ -966,31 +990,60 @@
       <div class="pane">
         <div class="row">
           <div class="kicker">Stage Skills</div>
-          <div class="stage-dag" role="img" aria-label="stage 依赖图：lulu-brainstorm 分出产品线与技术线，汇于 lulu-plan、lulu-tasks、lulu-code、lulu-review">
-            <div class="stage-node">lulu-brainstorm</div>
-            <div class="stage-tracks">
-              <div class="track">
-                <span class="arrow">→</span>
-                <div class="stage-node">lulu-bet</div>
-                <span class="arrow">→</span>
-                <div class="stage-node">lulu-spec</div>
+          <div class="cycle-lines">
+            <div class="cycle-line">
+              <div class="cycle-label">
+                <div class="cycle-note">把产品和架构想清楚</div>
               </div>
-              <div class="track">
-                <span class="arrow">→</span>
-                <div class="stage-node">lulu-approach</div>
-                <span class="arrow">→</span>
-                <div class="stage-node">lulu-design</div>
+              <div class="stage-dag" role="img" aria-label="把产品和架构想清楚。lulu-brainstorm 分出产品轨 lulu-bet → lulu-blueprint，与架构轨 lulu-approach → lulu-arch，两条轨没有先后">
+                <div class="stage-node">lulu-brainstorm</div>
+                <div class="stage-tracks">
+                  <div class="track">
+                    <span class="arrow">→</span>
+                    <div class="stage-node">lulu-bet</div>
+                    <span class="arrow">→</span>
+                    <div class="stage-node">lulu-blueprint</div>
+                  </div>
+                  <div class="track">
+                    <span class="arrow">→</span>
+                    <div class="stage-node">lulu-approach</div>
+                    <span class="arrow">→</span>
+                    <div class="stage-node">lulu-arch</div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="stage-merge">
-              <span class="arrow">→</span>
-              <div class="stage-node">lulu-plan</div>
-              <span class="arrow">→</span>
-              <div class="stage-node">lulu-tasks</div>
-              <span class="arrow">→</span>
-              <div class="stage-node">lulu-code</div>
-              <span class="arrow">→</span>
-              <div class="stage-node">lulu-review</div>
+            <div class="cycle-line">
+              <div class="cycle-label">
+                <div class="cycle-note">把功能做到代码</div>
+              </div>
+              <div class="stage-dag" role="img" aria-label="把功能做到代码。lulu-brainstorm 分出产品线与技术线，汇于 lulu-plan、lulu-tasks、lulu-code、lulu-review">
+                <div class="stage-node">lulu-brainstorm</div>
+                <div class="stage-tracks">
+                  <div class="track">
+                    <span class="arrow">→</span>
+                    <div class="stage-node">lulu-bet</div>
+                    <span class="arrow">→</span>
+                    <div class="stage-node">lulu-spec</div>
+                  </div>
+                  <div class="track">
+                    <span class="arrow">→</span>
+                    <div class="stage-node">lulu-approach</div>
+                    <span class="arrow">→</span>
+                    <div class="stage-node">lulu-design</div>
+                  </div>
+                </div>
+                <div class="stage-merge">
+                  <span class="arrow">→</span>
+                  <div class="stage-node">lulu-plan</div>
+                  <span class="arrow">→</span>
+                  <div class="stage-node">lulu-tasks</div>
+                  <span class="arrow">→</span>
+                  <div class="stage-node">lulu-code</div>
+                  <span class="arrow">→</span>
+                  <div class="stage-node">lulu-review</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1093,7 +1146,7 @@
               <span class="phase-item">风险评估</span>
             </div>
             <span class="edge"></span>
-            <span class="cell spine">持续风险释放</span>
+            <span class="cell spine">风险释放</span>
           </div>
         </div>
         <div class="row">
@@ -1138,7 +1191,7 @@
       </div>
       <div class="pane">
         <div class="row">
-          <div class="kicker">SKILL 范式</div>
+          <div class="kicker">目标驱动</div>
           <div class="chips">
             <span class="cell">薄编排<span class="dot">·</span>认知地图<span class="dot">·</span>机械执行<span class="dot">·</span>数据层</span>
           </div>
